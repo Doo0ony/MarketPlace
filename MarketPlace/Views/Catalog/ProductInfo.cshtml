@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Подробная информация";
+    var product = Model.First();
+    //todo
+}
+
+<link href="~/css/CategoryesStyleSheet.css" rel="stylesheet" />
+
+<h1>@product.Name</h1>
+
+<div class="row mt-2 g-4">
+    <img src="@product.ProductThumbnail"/>
+    <p>@product.Cost</p>
+    <p>@product.Description</p>
+</div>

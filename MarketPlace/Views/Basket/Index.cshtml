@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Корзина";
+}
+
+<h1>Ваша корзина</h1>
+
+@if(Model.Count() == 0)    
+{
+    <h2>В вашей корзине нет предметов 💔</h2>
+    <h5>Добавьте товар нажав на кнопку ниже:</h5>
+    <a asp-action="Index" asp-controller="Catalog" class="btn btn-primary btn-lg">Каталог</a>
+}
+
+<div class="row mt-2 g-4">
+    
+    @foreach (var item in Model)
+    {
+        <div class="card m-2" style="width: 13rem;">
+            <div class="container" style="padding:0;">
+                <div style="position:relative; ">
+                    <div style="position:absolute; right:0em; top:0.5em;">
+                        @using (Html.BeginForm("Delete", "Basket", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.ProductId" />
+                            <button type="submit" class="btn btn-danger" style="padding:5px">
+                                <img src="https://cdn-icons-png.flaticon.com/512/600/600931.png"
+                                     style="width:25px; height:25px;" />
+                            </button>
+                        }
+                    </div>
+                    <img style="width:100%;" src="@Html.DisplayFor(modelItem => item.ProductThumbnail)" class="card-img-top p-2" alt="...">
+                </div>
+            </div>
+            <div class="card-body" style="display:flex; flex-direction:column; justify-content:end; padding:1rem 0">
+                <div>
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                    <p class="text-muted">Цена: @Html.DisplayFor(modelItem => item.Cost) сом</p>
+
+                    @if (item.Amount > 0)
+                    {
+                        <p class="small text-success">✔ ЕСТЬ В НАЛИЧИИ!</p>
+                    }
+                </div>
+                @if (item.Amount > 0)
+                {
+                    @using (Html.BeginForm("Buy", "Orders", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="custom-number-input d-flex align-items-center">
+                            <button type="button" class="btn-number btn btn-danger decrease" onclick="decreaseNumber(this)">-</button>
+                            <input type="number" style="width: 100%; margin:8px; text-align:center" name="amount" class="number-input form-control" value="1" readonly>
+                            <button type="button" class="btn-number btn btn-primary increase" onclick="increaseNumber(this)">+</button>
+                        </div>
+
+                        <input type="hidden" name="productId" value="@item.ProductId" />
+                        <input type="submit" style="width:100%" value="Купить" class="btn btn-primary btn-lg" />
+                    }
+                }
+                else
+                {
+                    <p class="small text-danger">❌ НЕТ В НАЛИЧИИ!</p>
+
+                    <div class="custom-number-input d-flex align-items-center">
+                        <button type="button" class="btn-number btn btn-danger decrease" onclick="decreaseNumber(this)" disabled>-</button>
+                        <input type="number" style="width: 100%; margin:8px; text-align:center" name="amount" class="number-input form-control" value="1" disabled readonly>
+                        <button type="button" class="btn-number btn btn-primary increase" onclick="increaseNumber(this)" disabled>+</button>
+                    </div>
+
+                    <input type="button" style="bottom:0;" disabled value="Купить" class="btn btn-primary btn-lg" />
+                }
+            </div>
+        </div>
+    }
+    <script>
+        function increaseNumber(button) {
+            var input = button.parentNode.querySelector('.number-input');
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decreaseNumber(button) {
+            var input = button.parentNode.querySelector('.number-input');
+            input.value = Math.max(parseInt(input.value) - 1, 1);
+        }
+
+    </script>
+</div>
+
+
+

@@ -1,0 +1,38 @@
+﻿@model List<UserWithRole>
+
+@{
+    ViewData["Title"] = "Настройки ролей";
+}
+
+<h1>Настройки роли пользователя</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Email</th>
+            <th>Роль</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.UserLastName</td>
+                <td>
+                    <details>
+                        <summary>Показать</summary>
+                        @user.Email
+                    </details>
+                    </td>
+                <td>@user.RoleName</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-action="Edit" asp-controller="UsersRole" asp-route-userId="@user.UserId">Изменить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Категории";
+}
+
+<link href="~/css/CategoryesStyleSheet.css" rel="stylesheet"/>
+
+<h1>Категории</h1>
+
+<div class="row mt-2 g-4">
+    @foreach(var item in Model)
+    {
+        <div class="col-md-3">
+            <a class="link" asp-controller="Catalog" asp-action="SubCatalog" asp-route-id="@item.CategoryId">
+                <div class="card p-1">
+                    <div class="d-flex justify-content-between align-items-center p-2">
+                        <div class="flex-column lh-1 imagename"> <span>@Html.DisplayFor(modelItem => item.Name)</span> </div>
+                        <div> <img src="@Html.DisplayFor(modelItem => item.CategoryThumbnail)" height="100" width="100" /> </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>

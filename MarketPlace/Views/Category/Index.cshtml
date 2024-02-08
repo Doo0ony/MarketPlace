@@ -1,0 +1,41 @@
+﻿@model IEnumerable<MarketPlace.Models.Category>
+
+@{
+    ViewData["Title"] = "Настройки категорий";
+}
+
+<h1>Настройки категорий</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Создать новую категорию</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Название
+            </th>
+            <th scope="col">
+                Картинка
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                    <img src="@Html.DisplayFor(modelItem => item.CategoryThumbnail)" style="height:6em" />
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" style="width:50%" asp-action="Edit" asp-route-id="@item.CategoryId">Изменить</a>
+                <a class="btn btn-info btn-sm text-white" style="margin:4px 0px; width:50%" asp-action="Details" asp-route-id="@item.CategoryId">Подробнее</a>
+                <a class="btn btn-danger btn-sm" style="width:50%" asp-action="Delete" asp-route-id="@item.CategoryId">Удалить</a>
+            </td>    
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,25 @@
+﻿* {
+    margin: 0;
+    padding: 0
+}
+
+.link {
+    text-decoration:none;
+}
+
+body {
+    background-color: #f2eae3
+}
+
+.imagename {
+    color:black;
+    font-size: 22px;
+    font-weight: bold
+}
+
+.card {
+    height: 130px;
+    overflow: hidden;
+    border: none;
+    border-radius: 15px
+}

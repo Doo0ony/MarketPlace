@@ -1,0 +1,13 @@
+﻿@model UserWithRole
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="UserId" />
+
+    <label asp-for="UserName"></label>
+    <input asp-for="UserName" readonly />
+
+    <label asp-for="RoleName"></label>
+    <select asp-for="RoleId" asp-items="@ViewBag.Roles"></select>
+
+    <button type="submit">Сохранить</button>
+</form>

@@ -1,0 +1,29 @@
+﻿
+<h1>Панель управления</h1>
+
+<ul class="navbar-nav flex-grow-1">
+    @if (ViewBag.Role == "Admin")
+    {
+        <li class="nav-item">
+            <a class="nav-link text-white w-100 btn btn-lg btn-primary mb-2" asp-area="" asp-controller="AppRoles" asp-action="Index">Добавить роль</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white w-100 btn btn-lg btn-primary mb-2" asp-area="" asp-controller="UsersRole" asp-action="Index">Изменить роль пользователя</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white w-100 btn btn-lg btn-primary mb-2" asp-area="" asp-controller="Category" asp-action="Index">Добавить категории</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white w-100 btn btn-lg btn-primary mb-2" asp-area="" asp-controller="SubCategory" asp-action="Index">Добавить подкатегории</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white w-100 btn btn-lg btn-primary mb-2" asp-area="" asp-controller="Product" asp-action="Index">Добавить товары</a>
+        </li>
+    }
+    else if (ViewBag.Role == "Salesman")
+    {
+        <li class="nav-item">
+            <a class="nav-link text-white w-100 btn btn-lg btn-primary mb-2" asp-area="" asp-controller="Product" asp-action="Index">Добавить товары</a>
+        </li>
+    }
+</ul>

@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="https://cdn-icons-png.flaticon.com/512/6452/6452363.png" alt="" width="70" height="70">
+    
+    <h1 class="display-5 fw-bold">ПРИВЕТ</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+            Добро пожаловать в наш онлайн магазин 
+            <span style="font-style:italic">Danone</span>! 
+            Вы искали магазин, где есть <span style="font-weight:400">все</span>?
+            - Вы попали в правильное место. Здесь вы найдете все что угодно
+            от продуктов питания до электроники.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a asp-controller="Catalog" asp-action="Index"> 
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/7541/7541206.png" style="width:auto; height:26px" />
+                    За покупками!
+                </button>
+            </a>
+
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a asp-area="Identity" asp-page="/Account/Login">
+                    <button type="button" class="btn btn-secondary btn-lg px-4 gap-3">                  
+                        🔑 Войти в аккаунт
+                    </button>
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+

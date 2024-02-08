@@ -1,0 +1,50 @@
+﻿@page
+@model EnableAuthenticatorModel
+@{
+    ViewData["Title"] = "Настройка аутентификатора";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h3>@ViewData["Title"]</h3>
+<div>
+    <p>Чтобы использовать аутентификацию через приложение выполните следующие шаги:</p>
+    <ol class="list">
+        <li>
+            <p>
+                Скачайте приложение для двухфакторной аутентификации, например Microsoft Authenticator для
+                <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> и
+                <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> или
+                Google Authenticator для
+                <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">Android</a> и
+                <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a>.
+            </p>
+        </li>
+        <li>
+            <p>Отсканируйте QR Code или введите этот ключ <kbd>@Model.SharedKey</kbd> в приложение-аутентификатор. Пробелы не важны, не чувствителен к регистру.</p>
+        </li>
+        <li>
+            <p>
+                Когда вы отсканируете QR код или введете ключ, ваше приложение двухфакторной аутентификации предоставит вам
+                уникальый код. Введите этот код ниже.
+            </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <form id="send-code" method="post">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Code" class="form-control" autocomplete="off" placeholder="Пожалуйста введите код."/>
+                            <label asp-for="Input.Code" class="control-label form-label">Код подтверждения</label>
+                            <span asp-validation-for="Input.Code" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="w-100 btn btn-lg btn-primary">Подтвердить</button>
+                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    </form>
+                </div>
+            </div>
+        </li>
+    </ol>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

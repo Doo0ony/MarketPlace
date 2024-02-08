@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Product>
+
+
+@{
+    ViewData["Title"] = "Товары";
+}
+
+<link href="~/css/ProductCardStyles.css" rel="stylesheet" />
+
+<div class="row mt-2 g-4">
+
+    @if (Model.Count() == 0)
+    {
+        <h1>Сейчас нет товаров 💔</h1>
+        <h4>Возвращайтесь позже ...</h4>
+    }
+
+    @foreach (var item in Model)
+    {
+        <div class="card m-2" style="width: 13rem;">
+            <div class="container" style="padding:0;">
+                <div style="position:relative; ">
+                    <img style="width:100%;" src="@Html.DisplayFor(modelItem => item.ProductThumbnail)" class="card-img-top p-2" alt="...">
+                </div>
+            </div>
+            <div class="card-body" style="display:flex; flex-direction:column; justify-content:end; padding:1rem 0">
+                <div>
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                    <p class="text-muted">Цена: @Html.DisplayFor(modelItem => item.Cost) сом</p>
+
+                    @if (item.Amount > 0)
+                    {
+                        <p class="small text-success">✔ ЕСТЬ В НАЛИЧИИ!</p>
+                    }
+                </div>
+                @if (item.Amount > 0)
+                {
+                    @using (Html.BeginForm("Add", "Basket", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@item.ProductId" />
+                        <input type="submit" value="В корзину" class="btn btn-primary btn-lg" style="width:100%" />
+                    }
+                }
+                else
+                {
+                    <p class="small text-danger">❌ НЕТ В НАЛИЧИИ!</p>
+                    <input type="button" disabled value="В корзину" class="btn btn-primary btn-lg" style="width:100%" />
+                }
+            </div>
+        </div>
+    }
+</div>
+
+
+   

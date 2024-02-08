@@ -1,0 +1,78 @@
+﻿@model IEnumerable<MarketPlace.Models.Product>
+
+@{
+    ViewData["Title"] = "Ваши товары";
+}
+
+<h1>Ваши товары</h1>
+<form method="post" class="mb-2">
+    <div style="display:flex; flex-direction:row">
+        <input type="text" class="px-1" name="SearchString" placeholder="Name" value="@ViewData["CurrentFilter"]"/>
+        <input type="submit" value="Поиск" class=" btn btn-primary mx-2">
+        <a class="btn btn-outline-primary" asp-action="Index">Сбросить фильтры</a>
+    </div>
+</form>
+<p>
+    <a class="btn btn-primary" asp-action="Create">Создать новый товар</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]">
+                Название
+                </a>
+            </th>
+            <th scope="col">
+                Описание
+            </th>
+            <th scope="col">
+                Картинка
+            </th>
+            <th scope="col">
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["CostSortParam"]">
+                Цена
+                </a>
+            </th>
+            <th scope="col">
+                Категория
+            </th>
+            <th scope="col">
+                Количество
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <details>
+                <summary>Показать</summary>
+                @Html.DisplayFor(modelItem => item.Description)
+                </details>
+            </td>
+            <td>
+                <img src="@Html.DisplayFor(modelItem => item.ProductThumbnail)" style="height:5em;">                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubCategory.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" style="width:100%" asp-action="Edit" asp-route-id="@item.ProductId">Изменить</a>
+                <a class="btn btn-info btn-sm text-white" style="margin:4px 0px; width:100%" asp-action="Details" asp-route-id="@item.ProductId">Подробнее</a>
+                <a class="btn btn-danger btn-sm" style="width:100%" asp-action="Delete" asp-route-id="@item.ProductId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
