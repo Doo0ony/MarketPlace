@@ -99,14 +99,13 @@ namespace MarketPlace.Controllers
         }
 
         // GET: Product/Edit/5
-        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Products == null)
                 return NotFound();
-
+            
             var product = await _context.Products.FindAsync(id);
-
+            
             if (product == null)
                 return NotFound();
 
@@ -127,6 +126,10 @@ namespace MarketPlace.Controllers
         {
             if (id != product.ProductId)
                 return NotFound();
+
+            var existingProduct = await _context.Products.AsNoTracking().FirstOrDefaultAsync(p => p.ProductId == id);
+
+            product.AuthorId = existingProduct.AuthorId;
 
             if (ModelState.IsValid)
             {
